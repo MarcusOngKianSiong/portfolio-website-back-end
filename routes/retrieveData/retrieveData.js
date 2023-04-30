@@ -11,11 +11,20 @@ router.get('/getAllTableContents', (req, res) => {
 });
 
 router.get('/getProjectDocumentation',(req,res)=>{
-    const project_id = req.query.project_id;
-    databaseConnector.getMultipleTableData(project_id).then(outcome=>{
-        console.log(outcome)
-        res.send(outcome)
-    })
+    
+    try{
+        const project_id = req.query.project_id;
+        databaseConnector.getMultipleTableData(project_id).then(outcome=>{
+            console.log(outcome)
+            res.send(outcome)
+        }).catch(err=>{
+            console.log("ERROR HANDLING OF GETPROJECTDOCUMENTATION!!!")
+            res.send(err)
+        })    
+    }catch(err){
+        res.send({status: "error in inputs"})
+    }
+    
 })
 
 module.exports = router;

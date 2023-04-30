@@ -23,7 +23,7 @@ class client{
             console.log(error)
         }
     }
-
+    
     async insertValuesIntoTable(tableName, columns, values){
         // e.g. insert into bob (something) values (10),(20);
 
@@ -102,16 +102,22 @@ class client{
     }
     
     async getMultipleTableData(project_id){
-        const query = `select section.id, section.title as section_title, section.order_num as section_order_num, images.image_link, sub_section.title as sub_section_title, sub_section.order_num as sub_section_order_num, sub_section.content
-        from section left join images on section.id = images.section_id left join sub_section on section.id = sub_section.section_id where section.project_id = ${project_id};`
-        return this.client.query(query).then(res=>{
-            return dataFormatting.dataFormat(res.rows)
-            return res.rows;
-        })
-        .catch(err=>{
-            throw new Error(err.message)
-            
-        })
+        if (project_id){
+            const query = `select section.id, section.title as section_title, section.order_num as section_order_num, images.image_link, sub_section.title as sub_section_title, sub_section.order_num as sub_section_order_num, sub_section.content
+            from section left join images on section.id = images.section_id left join sub_section on section.id = sub_section.section_id where section.project_id = ${project_id};`
+            return this.client.query(query).then(res=>{
+                return dataFormatting.dataFormat(res.rows)
+                return res.rows;
+            })
+            .catch(err=>{
+                throw new Error(err.message)
+            })
+        }else{
+            return new Promise((resolve, reject) => {
+                reject("getMultipleTableData function: ",`project_id of ${project_id} is invalid....`)
+            })
+        }
+        
     }
 }   
 
@@ -124,5 +130,10 @@ const obj = {
   };
   
 const databaseConnector = new client(obj)
+
+databaseConnector.getMultipleTableData(1).then(res=>{
+    console.log(res)
+})
+
 
 module.exports = {client,databaseConnector}
