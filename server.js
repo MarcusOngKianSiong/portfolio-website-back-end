@@ -2,6 +2,7 @@ const express = require('express')
 const cors = require('cors')
 const retrieveData = require('./routes/retrieveData/retrieveData.js')
 const app = express()
+const {setUpSocket} = require('./BiDirectionalRoutes/socket.js')
 
 app.use(cors({
     origin: '*'
@@ -9,9 +10,13 @@ app.use(cors({
 
 app.use('/retrieveData',retrieveData)
 
+app.get('/test',(req,res)=>{
+    res.send({status: "testing successful"})
+})
 
-
-app.listen(3001,()=>{
+const server = app.listen(3001,()=>{
     console.log("listening to 3001.......")
 })
+
+setUpSocket(app,server)
 
