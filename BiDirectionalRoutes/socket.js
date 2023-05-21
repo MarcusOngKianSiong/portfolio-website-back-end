@@ -1,7 +1,7 @@
 const { Server } = require("socket.io");
 const cors = require('cors')
 const {createServer} = require('http')
-
+const {executionPathApp} = require('./executionPathApp.js')
 let numberOfChatters = [];
 const chatLog = [];
 
@@ -45,6 +45,8 @@ function addNewMessage(socket,io){
     
 }
 
+
+
 // send "username"
 function collectingUserName(socket,id,io){
   
@@ -72,16 +74,22 @@ function setUpSocket(app, server){
     } });
     
     io.on('connection',(socket)=>{
-        console.log("\x1b[32m","---new connection established....: ")
-        
-        
+                
+                console.log("Socket server created.......")
+                // *Chat app
+                collectingUserName(socket,socket.id,io)
+                addNewMessage(socket,io)
+                removeChatter(socket,io)
 
-        collectingUserName(socket,socket.id,io)
-
-        addNewMessage(socket,io)
-
-        removeChatter(socket,io)
-        // socket.emit('checking again','checking the send again...')
+                // execution path app
+                executionPathApp.createApplicationInstance(socket)
+                executionPathApp.sendDataToApp(socket,io)
+                executionPathApp.clearApplicationInstance(socket)
+                
+                // testing
+                socket.on('test',(data)=>{
+                    socket.emit('test',"hello there?")
+                })
     })
 
     io.attach(server)

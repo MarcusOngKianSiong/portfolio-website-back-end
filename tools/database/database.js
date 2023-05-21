@@ -24,6 +24,17 @@ class client{
         }
     }
     
+    /**
+     * This function inserts values into a specified table in a database using SQL syntax.
+     * @param tableName - The name of the table where the values will be inserted.
+     * @param columns - An array of column names for the table where the values will be inserted. For
+     * example, ["name", "age", "email"].
+     * @param values - The values parameter is an array of objects, where each object represents a row
+     * to be inserted into the table. The keys of each object correspond to the column names, and the
+     * values correspond to the values to be inserted into those columns for that row.
+     * @returns a promise that resolves to a boolean value of `true` if the query is successful, and
+     * throws an error with a message if the query fails.
+     */
     async insertValuesIntoTable(tableName, columns, values){
         // e.g. insert into bob (something) values (10),(20);
 
@@ -40,27 +51,23 @@ class client{
         const final = `insert into ${tableName} ${columnString} values ${allValues};`
         
         // Send query to database
-        
             return await this.client.query(final).then(res=>{
                 return true
             })
             .catch(err=>{
-                throw new Error("insertValuesIntoTable function: ",err.message);
+                throw new Error("insertValuesIntoTable function: "+final);
             })
         
     }
 
     async createTable(tableName,columns){
-
         const columnCharacteristics = columns.join(`,`);
-        
         await this.client.query(`create table ${tableName} (${columnCharacteristics})`).then(res=>{
             console.log("Table created...");
         })
         .catch(err=>{
             throw new Error(`Create table error: ${err.message}`);
         })
-        
     }
 
     async deleteData(tableName){
@@ -121,31 +128,34 @@ class client{
     }
 }   
 
-// const obj = {
-//     database: 'portfolio_website',
-//     username: 'marcus',
-//     password: "",
-//     hostname: 'localhost',
-//     port: '5432',
-//   };
-  
 const obj = {
-    database: 'test_7mf4',
+    database: 'portfolio_website',
     username: 'marcus',
-    password: 'AyMxTaghIdB72sYVwXarfXrvXo3h3xXz',
-    hostname: 'dpg-ch71mlg2qv26p1ajjkqg-a',
+    password: "",
+    hostname: 'localhost',
     port: '5432',
-    connectionString: 'postgres://marcus:AyMxTaghIdB72sYVwXarfXrvXo3h3xXz@dpg-ch71mlg2qv26p1ajjkqg-a.singapore-postgres.render.com/test_7mf4',
-    ssl: {
-        rejectUnauthorized: false
-    }
-}
+  };
+  
+// const obj = {
+//     database: 'test_7mf4',
+//     username: 'marcus',
+//     password: 'AyMxTaghIdB72sYVwXarfXrvXo3h3xXz',
+//     hostname: 'dpg-ch71mlg2qv26p1ajjkqg-a',
+//     port: '5432',
+//     connectionString: 'postgres://marcus:AyMxTaghIdB72sYVwXarfXrvXo3h3xXz@dpg-ch71mlg2qv26p1ajjkqg-a.singapore-postgres.render.com/test_7mf4',
+//     ssl: {
+//         rejectUnauthorized: false
+//     }
+// }
+
+
 
 const databaseConnector = new client(obj)
 
-databaseConnector.getMultipleTableData(1).then(res=>{
-    console.log(res)
-})
+// databaseConnector.getMultipleTableData(1).then(res=>{
+//     console.log(res)
+// })
 
 
 module.exports = {client,databaseConnector}
+

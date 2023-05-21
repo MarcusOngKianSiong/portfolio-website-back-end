@@ -1,12 +1,15 @@
 const express = require('express')
 const cors = require('cors')
 const retrieveData = require('./routes/retrieveData/retrieveData.js')
+const executionPath = require('./routes/projects/executionPath/executionPath.js')
 const app = express()
 const {setUpSocket} = require('./BiDirectionalRoutes/socket.js')
 
 app.use(cors({
     origin: '*'
 }))
+
+app.use('/executionPath',executionPath.router)
 
 app.use('/retrieveData',retrieveData)
 
