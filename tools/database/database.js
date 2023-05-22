@@ -15,8 +15,10 @@ class client{
     }
     
     async getTableData(tableName){
+        console.log("database.js: GET TABLE DATA")
         try{
             const data = await this.client.query(`select * from ${tableName}`)
+            console.log('Check data retrieved: ',data.rows)
             return data.rows
         }
         catch (error) {
