@@ -8,5 +8,8 @@ module.exports = {
         return string.slice(0,-1);
     }
     
+    
+    
+    
 }
 
