@@ -126,29 +126,38 @@ class client{
                 reject("getMultipleTableData function: ",`project_id of ${project_id} is invalid....`)
             })
         }
-        
+    }
+
+    async getTableDataBasedOnCondition(tableName, condition){
+        return this.client.query(`select * from ${tableName} where ${condition}`)
+        .then(res=>{
+            return res.rows
+        })
+        .catch(err=>{
+            return `Error in retrieving data.`
+        })
     }
 }   
 
-// const obj = {
-//     database: 'portfolio_website',
-//     username: 'marcus',
-//     password: "",
-//     hostname: 'localhost',
-//     port: '5432',
-//   };
-  
 const obj = {
-    database: 'test_7mf4',
+    database: 'portfolio_website',
     username: 'marcus',
-    password: 'AyMxTaghIdB72sYVwXarfXrvXo3h3xXz',
-    hostname: 'dpg-ch71mlg2qv26p1ajjkqg-a',
+    password: "",
+    hostname: 'localhost',
     port: '5432',
-    connectionString: 'postgres://marcus:AyMxTaghIdB72sYVwXarfXrvXo3h3xXz@dpg-ch71mlg2qv26p1ajjkqg-a.singapore-postgres.render.com/test_7mf4',
-    ssl: {
-        rejectUnauthorized: false
-    }
-}
+  };
+  
+// const obj = {
+//     database: 'test_7mf4',
+//     username: 'marcus',
+//     password: 'AyMxTaghIdB72sYVwXarfXrvXo3h3xXz',
+//     hostname: 'dpg-ch71mlg2qv26p1ajjkqg-a',
+//     port: '5432',
+//     connectionString: 'postgres://marcus:AyMxTaghIdB72sYVwXarfXrvXo3h3xXz@dpg-ch71mlg2qv26p1ajjkqg-a.singapore-postgres.render.com/test_7mf4',
+//     ssl: {
+//         rejectUnauthorized: false
+//     }
+// }
 
 
 

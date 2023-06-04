@@ -13,7 +13,7 @@ router.get('/getAllTableContents', (req, res) => {
 });
 
 router.get('/getProjectDocumentation',(req,res)=>{
-    console.log('ROUTING TO GET PROJECT DOCUMENTATION......')
+    console.log('ROUTING TO GET PROJECT DOCUMENTATION......') 
     try{
         const project_id = req.query.project_id;
         databaseConnector.getMultipleTableData(project_id).then(outcome=>{
@@ -24,10 +24,16 @@ router.get('/getProjectDocumentation',(req,res)=>{
             res.send(err)
         })    
     }catch(err){
-        res.send({status: "error in inputs"})
+        res.send({status: "error in inputs"});
     }
-    
+})
+
+router.get('/getMarkDownDocumentation',(req,res)=>{
+    const project_id = req.query.project_id;
+    // res.send({status: true,project_id: project_id});
+    databaseConnector.getTableDataBasedOnCondition('documentation',`project_id = ${project_id}`).then(data=>{
+            res.send({documentation: data[0].documentation});
+    })
 })
 
 module.exports = router;
-
