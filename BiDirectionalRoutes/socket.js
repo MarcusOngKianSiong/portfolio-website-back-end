@@ -1,7 +1,13 @@
 const { Server } = require("socket.io");
 const cors = require('cors')
 const {createServer} = require('http')
+
+
+// apps
 const {executionPathApp} = require('./executionPathApp.js')
+const {dataVisualization} = require('./dataVisualizationApp.js')
+const {eventEmitter} = require('../tools/eventEmitter/eventEmitter.js')
+
 let numberOfChatters = [];
 const chatLog = [];
 
@@ -86,10 +92,16 @@ function setUpSocket(app, server){
                 executionPathApp.sendDataToApp(socket,io)
                 executionPathApp.clearApplicationInstance(socket)
                 
+                // Data visualization app
+                eventEmitter.on('visualize data',(data)=>{          // When the event emitter notices "visualize data" event, emit a socket signal
+                    socket.emit('visualize data',data)              // emit a socket signal to pass data to the front end
+                })
+                
                 // testing
                 socket.on('test',(data)=>{
                     socket.emit('test',"hello there?")
                 })
+
     })
 
     io.attach(server)
