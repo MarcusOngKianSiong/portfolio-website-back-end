@@ -9,7 +9,7 @@ const dataFormatting = require('../dataFormat/dataFormatting.js')
 class client{
     
     constructor(loginDetails){
-        inputValidation.validateObject(loginDetails,['database','username','password','hostname','port'])
+        inputValidation.validateObject(loginDetails,['database','user','password','host','port'])
         this.client = new Client(loginDetails)
         this.client.connect()
     }
@@ -141,25 +141,25 @@ class client{
 
 // const obj = {
 //     database: 'portfolio_website',
-//     username: 'marcus',
-//     password: "",
-//     hostname: 'localhost',
+//     user: 'postgres',
+//     password: "marcus8351",
+//     host: 'localhost',
 //     port: '5432',
 //   };
-  
+
 const obj = {
-    database: 'test_7mf4',
-    username: 'marcus',
-    password: 'AyMxTaghIdB72sYVwXarfXrvXo3h3xXz',
-    hostname: 'dpg-ch71mlg2qv26p1ajjkqg-a',
+    database: 'portfolio_website',
+    user: 'marcus',
+    password: 'Dy5xhgrhDO3BLhMhBCwCjy9DqcDJ8gzO',
+    host: 'dpg-cj6seddjeehc73br1390-a',
     port: '5432',
-    connectionString: 'postgres://marcus:AyMxTaghIdB72sYVwXarfXrvXo3h3xXz@dpg-ch71mlg2qv26p1ajjkqg-a.singapore-postgres.render.com/test_7mf4',
+    connectionString: 'postgres://marcus:Dy5xhgrhDO3BLhMhBCwCjy9DqcDJ8gzO@dpg-cj6seddjeehc73br1390-a.singapore-postgres.render.com/portfolio_website',
     ssl: {
         rejectUnauthorized: false
     }
 }
 
-
+console.log(obj)
 
 const databaseConnector = new client(obj)
 

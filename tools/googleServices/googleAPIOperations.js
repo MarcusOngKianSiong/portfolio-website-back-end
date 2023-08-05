@@ -102,9 +102,10 @@ class GoogleDriveAPI {
   async upload(fileName,file){
     console.log("UPLOADING...")
     console.log("Have I received the file? -> ",file)
-    const drive = google.drive({ version: 'v3', auth: this.authClient });
-    // const filePath = path.join(__dirname,'tesla roadster.jpeg');
     try {
+      const drive = google.drive({ version: 'v3', auth: this.authClient });
+      // const filePath = path.join(__dirname,'tesla roadster.jpeg');
+    
 
       // create readable stream
       const readStream = new Readable()
@@ -127,7 +128,7 @@ class GoogleDriveAPI {
         console.log("Is it successful in storing the file on google drive? -> ",response.data)
         return response.data
     } catch (error) {
-        console.log("ERROR: ",error.message)
+        console.log("ERROR CAPTURED: ",error.message)
     }
   }
 

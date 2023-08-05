@@ -58,7 +58,7 @@ const executionPathApp = {
             }
         })
     },
-
+    
 
     displayFunctionDetails: (socket,io)=>{
         let instance = false;

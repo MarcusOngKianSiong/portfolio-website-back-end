@@ -39,7 +39,7 @@ function addNewMessage(socket,io){
     // expect: {name: 'bob', message: '....'}
     
     socket.on('new message',(message)=>{
-      console.log('\x1b[34m',"---Adding new message.....")
+        console.log('\x1b[34m',"---Adding new message.....")
         console.log("THIS: ",numberOfChatters)
         console.log("Checking id: ",socket.id)
         const obj = numberOfChatters.find(item=>item.id===socket.id);
